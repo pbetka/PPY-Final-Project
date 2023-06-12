@@ -19,8 +19,10 @@ def getBooks(session):
 # Update
 def updateBook(session, id_book, name, id_author):
     book = session.query(Book).filter_by(id_book=id_book).first()
+    author = session.query(Author).filter_by(id_author=id_author).first()
     book.name = name
     book.id_author = id_author
+    book.author = author
     session.commit()
 
 # Delete
@@ -61,7 +63,8 @@ def deleteAuthor(session, id_author):
 
 # Create
 def createCopy(session, id_copy, id_book):
-    copy = Copy(id_copy=id_copy, id_book=id_book)
+    book = session.query(Book).filter_by(id_book=id_book).first()
+    copy = Copy(id_copy=id_copy, id_book=id_book, book=book)
     session.add(copy)
     session.commit()
 
@@ -74,8 +77,10 @@ def getCopies(session):
 
 # Update
 def updateCopy(session, id_copy, id_book):
+    book = session.query(Book).filter_by(id_book=id_book).first()
     copy = session.query(Copy).filter_by(id_copy=id_copy).first()
     copy.id_book = id_book
+    copy.book = book
     session.commit()
 
 # Delete
@@ -145,14 +150,20 @@ def deleteClient(session, id_client):
 
 # Create
 def createRent(session, id_rent, id_client, id_copy, rent_date, due_date, given_back, id_employee):
+    client = session.query(Client).filter_by(id_client=id_client).first()
+    employee = session.query(Employee).filter_by(id_employee=id_employee).first()
+    copy = session.query(Copy).filter_by(id_copy=id_copy).first()
     rent = Rent(
         id_rent=id_rent,
         id_client=id_client,
+        client=client,
         id_copy=id_copy,
+        copy=copy,
         rent_date=rent_date,
         due_date=due_date,
         given_back=given_back,
-        id_employee=id_employee
+        id_employee=id_employee,
+        employee=employee
     )
     session.add(rent)
     session.commit()
@@ -174,13 +185,20 @@ def getRents(session, ):
 
 # Update
 def updateRent(session, id_rent, id_client, id_copy, rent_date, due_date, given_back, id_employee):
+    client = session.query(Client).filter_by(id_client=id_client).first()
+    employee = session.query(Employee).filter_by(id_employee=id_employee).first()
+    copy = session.query(Copy).filter_by(id_copy=id_copy).first()
     rent = session.query(Rent).filter_by(id_rent=id_rent).first()
     rent.id_client = id_client
+    rent.client = client
     rent.id_copy = id_copy
+    rent.copy = copy
     rent.rent_date = rent_date
     rent.due_date = due_date
-    given_back = given_back
-    id_employee = id_employee
+    rent.given_back = given_back
+    rent.id_employee = id_employee
+    rent.employee = employee
+    session.commit()
 
 # Delete
 def deleteRent(session, id_rent):
