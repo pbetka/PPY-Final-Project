@@ -1,6 +1,10 @@
 from tkinter import *
 from CRUD import *
-from threading import Thread
+from Tables.TableBook import *
+from sqlalchemy.orm.exc import UnmappedInstanceError
+from sqlalchemy.exc import IntegrityError
+from ErrorMsgs import *
+
 
 def createBookView(session):
     createWindow = Tk()
@@ -32,8 +36,14 @@ def createBookView(session):
     id_authorEntry.pack()
 
     def createBookCommand():
-        createBook(session, int(id_bookEntry.get()), nameEntry.get(), int(id_authorEntry.get()))
-        createWindow.destroy()
+        try:
+            createBook(session, int(id_bookEntry.get()), nameEntry.get(), int(id_authorEntry.get()))
+            createWindow.destroy()
+        except ValueError:
+            wrongInputType(createWindow)
+        except IntegrityError:
+            integrityError(createWindow)
+            session.rollback()
 
     createButton = Button(createWindow, text="Create", command=createBookCommand)
 
@@ -44,17 +54,7 @@ def getBookView(session):
 
     books = getBooks(session)
 
-    for book in books:
-        id_bookLabel = Label(readWindow, text=f"id_book: {str(book.id_book)}")
-
-        id_bookLabel.pack()
-
-        name = Label(readWindow, text=f"name: {book.name}")
-
-        name.pack()
-
-        id_author = Label(readWindow, text=f"id_author: {str(book.id_author)}")
-        id_author.pack()
+    TableBook(readWindow, books)
 
 def updateBookView(session):
     updateWindow = Tk()
@@ -87,15 +87,18 @@ def updateBookView(session):
 
     def updateBookCommand():
         try:
-            updateBook(session, int(id_bookEntry.get()), nameEntry.get(), int(id_authorEntry.get()))
+            returnCode = updateBook(session, int(id_bookEntry.get()), nameEntry.get(), int(id_authorEntry.get()))
             
-            def thread_function():
-                
-            thread = Thread(target=thread_function, args=(1,))
-            updateWindow.destroy()
+            if returnCode == -1:
+                noObject(updateWindow)
+            else:
+                updateWindow.destroy()
         except ValueError:
-            wrongInputLabel = Label(updateWindow, text="Wrong input!", fg="red")
-            wrongInputLabel.pack(side="bottom")
+            wrongInputType(updateWindow)
+        except IntegrityError:
+            FKError(updateWindow)
+            session.rollback()
+        
 
     updateButton = Button(updateWindow, text="Update", command=updateBookCommand)
 
@@ -115,8 +118,18 @@ def deleteBookView(session):
     id_bookEntry.pack()
 
     def deleteBookCommand():
-        deleteBook(session, int(id_bookEntry.get()))
-        deleteWindow.destroy()
+        try:
+            deleteBook(session, int(id_bookEntry.get()))
+            deleteWindow.destroy()
+        
+        except ValueError:
+            wrongInputType(deleteWindow)
+        except UnmappedInstanceError:
+            noObject(deleteWindow)
+            session.rollback()
+        except IntegrityError:
+            objectInUse(deleteWindow)
+            session.rollback()
 
     deleteButton = Button(deleteWindow, text="Delete", command=deleteBookCommand)
 

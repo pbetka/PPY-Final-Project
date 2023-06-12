@@ -1,6 +1,12 @@
 from tkinter import *
 from CRUD import *
-from threading import Thread
+from Tables.TableCopy import *
+from sqlalchemy.orm.exc import UnmappedInstanceError
+from sqlalchemy.exc import IntegrityError
+from ErrorMsgs import *
+
+def removeLabel(label):
+    label.destroy()
 
 def createCopyView(session):
     createWindow = Tk()
@@ -24,8 +30,14 @@ def createCopyView(session):
     id_bookEntry.pack()
 
     def createCopyCommand():
-        createCopy(session, int(id_copyEntry.get()), int(id_bookEntry.get()))
-        createWindow.destroy()
+        try:
+            createCopy(session, int(id_copyEntry.get()), int(id_bookEntry.get()))
+            createWindow.destroy()
+        except ValueError:
+            wrongInputType(createWindow)
+        except IntegrityError:
+            integrityError(createWindow)
+            session.rollback()
 
     createButton = Button(createWindow, text="Create", command=createCopyCommand)
 
@@ -36,14 +48,7 @@ def getCopyView(session):
 
     copies = getCopies(session)
 
-    for copy in copies:
-        id_copyLabel = Label(readWindow, text=f"id_copy: {str(copy.id_copy)}")
-
-        id_copyLabel.pack()
-
-        id_book = Label(readWindow, text=f"id_book: {str(copy.id_book)}")
-
-        id_book.pack()
+    TableCopy(readWindow, copies)
 
 def updateCopyView(session):
     updateWindow = Tk()
@@ -68,15 +73,17 @@ def updateCopyView(session):
 
     def updateCopyCommand():
         try:
-            updateCopy(session, int(id_copyEntry.get()), int(id_bookEntry.get()))
+            returnCode = updateCopy(session, int(id_copyEntry.get()), int(id_bookEntry.get()))
             
-            def thread_function():
-                print()
-            thread = Thread(target=thread_function, args=(1,))
-            updateWindow.destroy()
+            if returnCode == -1:
+                noObject(updateWindow)
+            else:
+                updateWindow.destroy()
         except ValueError:
-            wrongInputLabel = Label(updateWindow, text="Wrong input!", fg="red")
-            wrongInputLabel.pack(side="bottom")
+            wrongInputType(updateWindow)
+        except IntegrityError:
+            FKError(updateWindow)
+            session.rollback()
 
     updateButton = Button(updateWindow, text="Update", command=updateCopyCommand)
 
@@ -96,8 +103,18 @@ def deleteCopyView(session):
     id_copyEntry.pack()
 
     def deleteCopyCommand():
-        deleteCopy(session, int(id_copyEntry.get()))
-        deleteWindow.destroy()
+        try:
+            deleteCopy(session, int(id_copyEntry.get()))
+            deleteWindow.destroy()
+        
+        except ValueError:
+            wrongInputType(deleteWindow)
+        except UnmappedInstanceError:
+            noObject(deleteWindow)
+            session.rollback()
+        except IntegrityError:
+            objectInUse(deleteWindow)
+            session.rollback()
 
     deleteButton = Button(deleteWindow, text="Delete", command=deleteCopyCommand)
 

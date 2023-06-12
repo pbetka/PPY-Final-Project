@@ -1,7 +1,7 @@
 from turtle import left
 from Models import *
 from CRUD import *
-from View import *
+from Views.View import *
 from sqlalchemy import create_engine, MetaData, ForeignKey
 from sqlalchemy.orm import sessionmaker, registry, Mapped, mapped_column, relationship
 from datetime import date
@@ -95,6 +95,5 @@ def seedDB():
 if len(getBooks(session)) == 0 and len(getAuthors(session)) == 0 and len(getClients(session)) == 0 and len(getCopies(session)) == 0 and len(getEmployees(session)) == 0 and len(getRents(session)) == 0:
     seedDB()
 bookAuthor = session.query(Book).join(Author).all()
-print(str(bookAuthor[1].id_book) + " " + str(bookAuthor[1].id_author))
 
-window = Window(session)
+Window(session)

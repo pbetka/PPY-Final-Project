@@ -1,5 +1,12 @@
 from tkinter import *
 from CRUD import *
+from Tables.TableAuthor import *
+from sqlalchemy.orm.exc import UnmappedInstanceError
+from sqlalchemy.exc import IntegrityError
+from ErrorMsgs import *
+
+def removeLabel(label):
+    label.destroy()
 
 def createAuthorView(session):
     createWindow = Tk()
@@ -31,8 +38,14 @@ def createAuthorView(session):
     last_nameEntry.pack()
 
     def createAuthorCommand():
-        createAuthor(session, int(id_authorEntry.get()), first_nameEntry.get(), last_nameEntry.get())
-        createWindow.destroy()
+        try:
+            createAuthor(session, int(id_authorEntry.get()), first_nameEntry.get(), last_nameEntry.get())
+            createWindow.destroy()
+        except ValueError:
+            wrongInputType(createWindow)
+        except IntegrityError:
+            integrityError(createWindow)
+            session.rollback()
 
     createButton = Button(createWindow, text="Create", command=createAuthorCommand)
 
@@ -43,18 +56,7 @@ def getAuthorView(session):
 
     authors = getAuthors(session)
 
-    for author in authors:
-        id_authorLabel = Label(readWindow, text=f"id_author: {str(author.id_author)}")
-
-        id_authorLabel.pack()
-
-        first_name = Label(readWindow, text=f"first_name: {author.first_name}")
-
-        first_name.pack()
-
-        last_name = Label(readWindow, text=f"last_name: {author.last_name}")
-        
-        last_name.pack()
+    TableAuthor(readWindow, authors)
 
 def updateAuthorView(session):
     updateWindow = Tk()
@@ -86,8 +88,18 @@ def updateAuthorView(session):
     last_nameEntry.pack()
 
     def updateAuthorCommand():
-        updateAuthor(session, int(id_authorEntry.get()), first_nameEntry.get(), last_nameEntry.get())
-        updateWindow.destroy()
+        try:
+            returnCode = updateAuthor(session, int(id_authorEntry.get()), first_nameEntry.get(), last_nameEntry.get())
+            
+            if returnCode == -1:
+                noObject(updateWindow)
+            else:
+                updateWindow.destroy()
+        except ValueError:
+            wrongInputType(updateWindow)
+        except IntegrityError:
+            FKError(updateWindow)
+            session.rollback()
 
     updateButton = Button(updateWindow, text="Update", command=updateAuthorCommand)
 
@@ -107,8 +119,18 @@ def deleteAuthorView(session):
     id_authorEntry.pack()
 
     def deleteAuthorCommand():
-        deleteAuthor(session, int(id_authorEntry.get()))
-        deleteWindow.destroy()
+        try:
+            deleteAuthor(session, int(id_authorEntry.get()))
+            deleteWindow.destroy()
+        
+        except ValueError:
+            wrongInputType(deleteWindow)
+        except UnmappedInstanceError:
+            noObject(deleteWindow)
+            session.rollback()
+        except IntegrityError:
+            objectInUse(deleteWindow)
+            session.rollback()
 
     deleteButton = Button(deleteWindow, text="Delete", command=deleteAuthorCommand)
 
