@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Label, Button, Frame, Tk
 from Views.ViewBook import *
 from Views.ViewAuthor import *
 from Views.ViewCopy import *

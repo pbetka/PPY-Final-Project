@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, MetaData, ForeignKey
-from sqlalchemy.orm import sessionmaker, registry, Mapped, mapped_column, relationship
+from sqlalchemy import MetaData, ForeignKey
+from sqlalchemy.orm import registry, Mapped, mapped_column, relationship
 from datetime import date
 
 metadata = MetaData()

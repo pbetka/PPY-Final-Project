@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Label, Entry, Button, Frame, Tk
 from CRUD import *
 from Tables.TableRent import *
 from tkcalendar import Calendar

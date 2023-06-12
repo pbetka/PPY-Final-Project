@@ -1,13 +1,11 @@
-from turtle import left
 from Models import *
 from CRUD import *
 from Views.View import *
-from sqlalchemy import create_engine, MetaData, ForeignKey
-from sqlalchemy.orm import sessionmaker, registry, Mapped, mapped_column, relationship
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from datetime import date
 import random
 from datetime import date, timedelta
-from tkinter import *
 
 DB_URL = "sqlite:///library.db"
 

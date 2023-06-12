@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Label, Entry, Button, Tk
 from CRUD import *
 from Tables.TableCopy import *
 from sqlalchemy.orm.exc import UnmappedInstanceError
