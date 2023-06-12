@@ -1,6 +1,7 @@
 from tkinter import *
 from ViewBook import *
 from ViewAuthor import *
+from ViewCopy import *
 
 class Window:
     def __init__(self, session):
@@ -83,5 +84,43 @@ class Window:
         authorsCreateButton = Button(self.window, text="Create", command=createAuthorCommand)
 
         authorsCreateButton.pack(in_=authorsContainer, side="right")
+
+        #Copy
+        
+        copiesContainer = Frame(self.window)
+
+        copiesLabel = Label(self.window, text="Copies")
+
+        copiesLabel.pack(in_=copiesContainer, side="left")
+
+        def deleteCopyCommand():
+            deleteCopyView(session)
+
+        copiesDeleteButton = Button(self.window, text="Delete", command=deleteCopyCommand)
+
+        copiesDeleteButton.pack(in_=copiesContainer, side="right")
+
+        copiesContainer.pack(side="top", fill="x")
+
+        def updateCopyCommand():
+            updateCopyView(session)
+
+        copiesUpdateButton = Button(self.window, text="Update", command=updateCopyCommand)
+
+        copiesUpdateButton.pack(in_=copiesContainer, side="right")
+
+        def getCopyCommand():
+            getCopyView(session)
+
+        copiesReadButton = Button(self.window, text="Read", command=getCopyCommand)
+
+        copiesReadButton.pack(in_=copiesContainer, side="right")
+
+        def createCopyCommand():
+            createCopyView(session)
+
+        copiesCreateButton = Button(self.window, text="Create", command=createCopyCommand)
+
+        copiesCreateButton.pack(in_=copiesContainer, side="right")
 
         self.window.mainloop()

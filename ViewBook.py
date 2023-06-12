@@ -89,6 +89,8 @@ def updateBookView(session):
         try:
             updateBook(session, int(id_bookEntry.get()), nameEntry.get(), int(id_authorEntry.get()))
             
+            def thread_function():
+                
             thread = Thread(target=thread_function, args=(1,))
             updateWindow.destroy()
         except ValueError:
