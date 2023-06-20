@@ -1,7 +1,12 @@
 import tkinter as tk
 
+# Table displaying Books
+
 class TableBook:
     def __init__(self, root, books):
+
+        # Add headers to table
+
         headers = ["id_book", "name", "id_author"]
 
         numRows = len(books)
@@ -10,6 +15,8 @@ class TableBook:
         for j in range(numColumns):
             headerLabel = tk.Label(root, text=headers[j], font=("bold", 10))
             headerLabel.grid(row=0, column=j, padx=5, pady=5)
+
+        # Populate table with given data
         
         for i in range(numRows):
             for j in range(numColumns):

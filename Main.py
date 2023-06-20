@@ -7,6 +7,8 @@ from datetime import date
 import random
 from datetime import date, timedelta
 
+# Connect to database
+
 DB_URL = "sqlite:///library.db"
 
 engine = create_engine(DB_URL, connect_args={"check_same_thread": False})
@@ -90,8 +92,12 @@ def seedDB():
     for x in [a, b1, b2, b3]:
         session.refresh(x)
 
+# Seed if all tables empty or do not exist
+
 if len(getBooks(session)) == 0 and len(getAuthors(session)) == 0 and len(getClients(session)) == 0 and len(getCopies(session)) == 0 and len(getEmployees(session)) == 0 and len(getRents(session)) == 0:
     seedDB()
 bookAuthor = session.query(Book).join(Author).all()
+
+# Create tkinter main menu windwo
 
 Window(session)

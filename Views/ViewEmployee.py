@@ -5,8 +5,9 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from sqlalchemy.exc import IntegrityError
 from ErrorMsgs import *
 
-def removeLabel(label):
-    label.destroy()
+# Additional windows popping up when doing operations on Employees
+
+# Window for creating
 
 def createEmployeeView(session):
     createWindow = Tk()
@@ -46,6 +47,9 @@ def createEmployeeView(session):
     salaryEntry.pack()
 
     def createEmployeeCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             createEmployee(session, int(id_employeeEntry.get()), first_nameEntry.get(), last_nameEntry.get(), int(salaryEntry.get()))
             createWindow.destroy()
@@ -59,12 +63,16 @@ def createEmployeeView(session):
 
     createButton.pack()
 
+# Window for reading
+
 def getEmployeeView(session):
     readWindow = Tk()
 
     employees = getEmployees(session)
 
     TableEmployee(readWindow, employees)
+
+# Window for updating
 
 def updateEmployeeView(session):
     updateWindow = Tk()
@@ -104,6 +112,9 @@ def updateEmployeeView(session):
     salaryEntry.pack()
 
     def updateEmployeeCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             returnCode = updateEmployee(session, int(id_employeeEntry.get()), first_nameEntry.get(), last_nameEntry.get(), int(salaryEntry.get()))
 
@@ -121,6 +132,8 @@ def updateEmployeeView(session):
 
     updateButton.pack()
 
+# Window for deleting
+
 def deleteEmployeeView(session):
     deleteWindow = Tk()
 
@@ -135,6 +148,9 @@ def deleteEmployeeView(session):
     id_employeeEntry.pack()
 
     def deleteEmployeeCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             deleteEmployee(session, int(id_employeeEntry.get()))
             deleteWindow.destroy()

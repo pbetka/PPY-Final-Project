@@ -1,7 +1,12 @@
 import tkinter as tk
 
+# Table displaying Clients
+
 class TableClient:
     def __init__(self, root, clients):
+
+        # Add headers to table
+
         headers = ["id_client", "first_name", "last_name", "phone_number"]
 
         numRows = len(clients)
@@ -10,6 +15,8 @@ class TableClient:
         for j in range(numColumns):
             headerLabel = tk.Label(root, text=headers[j], font=("bold", 10))
             headerLabel.grid(row=0, column=j, padx=5, pady=5)
+
+        # Populate table with given data
         
         for i in range(numRows):
             for j in range(numColumns):

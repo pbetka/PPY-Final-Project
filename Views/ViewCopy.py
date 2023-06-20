@@ -5,8 +5,9 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from sqlalchemy.exc import IntegrityError
 from ErrorMsgs import *
 
-def removeLabel(label):
-    label.destroy()
+# Additional windows popping up when doing operations on Copies
+
+# Window for creating
 
 def createCopyView(session):
     createWindow = Tk()
@@ -30,6 +31,9 @@ def createCopyView(session):
     id_bookEntry.pack()
 
     def createCopyCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             createCopy(session, int(id_copyEntry.get()), int(id_bookEntry.get()))
             createWindow.destroy()
@@ -43,12 +47,16 @@ def createCopyView(session):
 
     createButton.pack()
 
+# Window for reading
+
 def getCopyView(session):
     readWindow = Tk()
 
     copies = getCopies(session)
 
     TableCopy(readWindow, copies)
+
+# Window for updating
 
 def updateCopyView(session):
     updateWindow = Tk()
@@ -72,6 +80,9 @@ def updateCopyView(session):
     id_bookEntry.pack()
 
     def updateCopyCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             returnCode = updateCopy(session, int(id_copyEntry.get()), int(id_bookEntry.get()))
             
@@ -89,6 +100,8 @@ def updateCopyView(session):
 
     updateButton.pack()
 
+# Window for deleting
+
 def deleteCopyView(session):
     deleteWindow = Tk()
 
@@ -103,6 +116,9 @@ def deleteCopyView(session):
     id_copyEntry.pack()
 
     def deleteCopyCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             deleteCopy(session, int(id_copyEntry.get()))
             deleteWindow.destroy()

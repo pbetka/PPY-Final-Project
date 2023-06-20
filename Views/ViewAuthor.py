@@ -5,8 +5,9 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from sqlalchemy.exc import IntegrityError
 from ErrorMsgs import *
 
-def removeLabel(label):
-    label.destroy()
+# Additional windows popping up when doing operations on Authors
+
+# Window for creating
 
 def createAuthorView(session):
     createWindow = Tk()
@@ -38,6 +39,9 @@ def createAuthorView(session):
     last_nameEntry.pack()
 
     def createAuthorCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+
         try:
             createAuthor(session, int(id_authorEntry.get()), first_nameEntry.get(), last_nameEntry.get())
             createWindow.destroy()
@@ -51,12 +55,16 @@ def createAuthorView(session):
 
     createButton.pack()
 
+# Window for reading
+
 def getAuthorView(session):
     readWindow = Tk()
 
     authors = getAuthors(session)
 
     TableAuthor(readWindow, authors)
+
+# Window for updating
 
 def updateAuthorView(session):
     updateWindow = Tk()
@@ -88,6 +96,9 @@ def updateAuthorView(session):
     last_nameEntry.pack()
 
     def updateAuthorCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             returnCode = updateAuthor(session, int(id_authorEntry.get()), first_nameEntry.get(), last_nameEntry.get())
             
@@ -105,6 +116,8 @@ def updateAuthorView(session):
 
     updateButton.pack()
 
+# Window for deleting
+
 def deleteAuthorView(session):
     deleteWindow = Tk()
 
@@ -119,6 +132,9 @@ def deleteAuthorView(session):
     id_authorEntry.pack()
 
     def deleteAuthorCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             deleteAuthor(session, int(id_authorEntry.get()))
             deleteWindow.destroy()

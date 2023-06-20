@@ -6,6 +6,8 @@ from Views.ViewClient import *
 from Views.ViewEmployee import *
 from Views.ViewRent import *
 
+# Main menu window
+
 class Window:
     def __init__(self, session):
         self.window = Tk()
@@ -14,11 +16,15 @@ class Window:
         
         #Book
 
+        # Container to have all elements for Book in one row
+
         booksContainer = Frame(self.window)
 
         booksLabel = Label(self.window, text="Books")
 
         booksLabel.pack(in_=booksContainer, side="left")
+
+        # Delete button
 
         def deleteBookCommand():
             deleteBookView(session)
@@ -29,6 +35,8 @@ class Window:
 
         booksContainer.pack(side="top", fill="x")
 
+        # Update button
+
         def updateBookCommand():
             updateBookView(session)
 
@@ -36,12 +44,16 @@ class Window:
 
         booksUpdateButton.pack(in_=booksContainer, side="right")
 
+        # Read button
+
         def getBookCommand():
             getBookView(session)
 
         booksReadButton = Button(self.window, text="Read", command=getBookCommand)
 
         booksReadButton.pack(in_=booksContainer, side="right")
+
+        # Create button
 
         def createBookCommand():
             createBookView(session)
@@ -51,12 +63,16 @@ class Window:
         booksCreateButton.pack(in_=booksContainer, side="right")
 
         #Author
+
+        # Container to have all elements for Author in one row
         
         authorsContainer = Frame(self.window, background="#5A5A5A")
 
         authorsLabel = Label(self.window, text="Authors")
 
         authorsLabel.pack(in_=authorsContainer, side="left")
+
+        # Delete button
 
         def deleteAuthorCommand():
             deleteAuthorView(session)
@@ -67,6 +83,8 @@ class Window:
 
         authorsContainer.pack(side="top", fill="x")
 
+        # Update button
+
         def updateAuthorCommand():
             updateAuthorView(session)
 
@@ -74,12 +92,16 @@ class Window:
 
         authorsUpdateButton.pack(in_=authorsContainer, side="right")
 
+        # Read button
+
         def getAuthorCommand():
             getAuthorView(session)
 
         authorsReadButton = Button(self.window, text="Read", command=getAuthorCommand)
 
         authorsReadButton.pack(in_=authorsContainer, side="right")
+
+        # Create button
 
         def createAuthorCommand():
             createAuthorView(session)
@@ -89,12 +111,16 @@ class Window:
         authorsCreateButton.pack(in_=authorsContainer, side="right")
 
         #Copy
+
+        # Container to have all elements for Copy in one row
         
         copiesContainer = Frame(self.window)
 
         copiesLabel = Label(self.window, text="Copies")
 
         copiesLabel.pack(in_=copiesContainer, side="left")
+
+        # Delete button
 
         def deleteCopyCommand():
             deleteCopyView(session)
@@ -105,6 +131,8 @@ class Window:
 
         copiesContainer.pack(side="top", fill="x")
 
+        # Update button
+
         def updateCopyCommand():
             updateCopyView(session)
 
@@ -112,12 +140,16 @@ class Window:
 
         copiesUpdateButton.pack(in_=copiesContainer, side="right")
 
+        # Read button
+
         def getCopyCommand():
             getCopyView(session)
 
         copiesReadButton = Button(self.window, text="Read", command=getCopyCommand)
 
         copiesReadButton.pack(in_=copiesContainer, side="right")
+
+        # Create button
 
         def createCopyCommand():
             createCopyView(session)
@@ -127,12 +159,16 @@ class Window:
         copiesCreateButton.pack(in_=copiesContainer, side="right")
 
         #Client
+
+        # Container to have all elements for Client in one row
         
         clientsContainer = Frame(self.window, background="#5A5A5A")
 
         clientsLabel = Label(self.window, text="Clients")
 
         clientsLabel.pack(in_=clientsContainer, side="left")
+
+        # Delete button
 
         def deleteClientCommand():
             deleteClientView(session)
@@ -143,6 +179,8 @@ class Window:
 
         clientsContainer.pack(side="top", fill="x")
 
+        # Update button
+
         def updateClientCommand():
             updateClientView(session)
 
@@ -150,12 +188,16 @@ class Window:
 
         clientsUpdateButton.pack(in_=clientsContainer, side="right")
 
+        # Read button
+
         def getClientCommand():
             getClientView(session)
 
         clientsReadButton = Button(self.window, text="Read", command=getClientCommand)
 
         clientsReadButton.pack(in_=clientsContainer, side="right")
+
+        # Create button
 
         def createClientCommand():
             createClientView(session)
@@ -165,12 +207,16 @@ class Window:
         clientsCreateButton.pack(in_=clientsContainer, side="right")
 
         #Employee
+
+        # Container to have all elements for Employee in one row
         
         employeesContainer = Frame(self.window)
 
         employeesLabel = Label(self.window, text="Employees")
 
         employeesLabel.pack(in_=employeesContainer, side="left")
+
+        # Delete button
 
         def deleteEmployeeCommand():
             deleteEmployeeView(session)
@@ -181,6 +227,8 @@ class Window:
 
         employeesContainer.pack(side="top", fill="x")
 
+        # Update button
+
         def updateEmployeeCommand():
             updateEmployeeView(session)
 
@@ -188,12 +236,16 @@ class Window:
 
         employeesUpdateButton.pack(in_=employeesContainer, side="right")
 
+        # Read button
+
         def getEmployeeCommand():
             getEmployeeView(session)
 
         employeesReadButton = Button(self.window, text="Read", command=getEmployeeCommand)
 
         employeesReadButton.pack(in_=employeesContainer, side="right")
+
+        # Create button
 
         def createEmployeeCommand():
             createEmployeeView(session)
@@ -203,12 +255,16 @@ class Window:
         employeesCreateButton.pack(in_=employeesContainer, side="right")
 
         #Rent
+
+        # Container to have all elements for Rent in one row
         
         rentsContainer = Frame(self.window, background="#5A5A5A")
 
         rentsLabel = Label(self.window, text="Rents")
 
         rentsLabel.pack(in_=rentsContainer, side="left")
+
+        # Delete button
 
         def deleteRentCommand():
             deleteRentView(session)
@@ -219,6 +275,8 @@ class Window:
 
         rentsContainer.pack(side="top", fill="x")
 
+        # Update button
+
         def updateRentCommand():
             updateRentView(session)
 
@@ -226,12 +284,16 @@ class Window:
 
         rentsUpdateButton.pack(in_=rentsContainer, side="right")
 
+        # Read button
+
         def getRentCommand():
             getRentView(session)
 
         rentsReadButton = Button(self.window, text="Read", command=getRentCommand)
 
         rentsReadButton.pack(in_=rentsContainer, side="right")
+
+        # Create button
 
         def createRentCommand():
             createRentView(session)

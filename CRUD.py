@@ -1,5 +1,7 @@
 from Models import Book, Author, Employee, Client, Copy, Rent
 
+# Functions used on database to operate on data
+
 # Book
 
 # Create

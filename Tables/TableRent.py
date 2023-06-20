@@ -1,7 +1,12 @@
 import tkinter as tk
 
+# Table displaying Rents
+
 class TableRent:
     def __init__(self, root, rents):
+
+        # Add headers to table
+
         headers = ["id_rent", "id_client", "rent_date", "due_date", "given_back", "id_employee", "id_copy"]
 
         numRows = len(rents)
@@ -10,6 +15,8 @@ class TableRent:
         for j in range(numColumns):
             headerLabel = tk.Label(root, text=headers[j], font=("bold", 10))
             headerLabel.grid(row=0, column=j, padx=5, pady=5)
+
+        # Populate table with given data
         
         for i in range(numRows):
             for j in range(numColumns):

@@ -5,6 +5,9 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from sqlalchemy.exc import IntegrityError
 from ErrorMsgs import *
 
+# Additional windows popping up when doing operations on Books
+
+# Window for creating
 
 def createBookView(session):
     createWindow = Tk()
@@ -36,6 +39,9 @@ def createBookView(session):
     id_authorEntry.pack()
 
     def createBookCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             createBook(session, int(id_bookEntry.get()), nameEntry.get(), int(id_authorEntry.get()))
             createWindow.destroy()
@@ -49,12 +55,16 @@ def createBookView(session):
 
     createButton.pack()
 
+# Window for reading
+
 def getBookView(session):
     readWindow = Tk()
 
     books = getBooks(session)
 
     TableBook(readWindow, books)
+
+# Window for updating
 
 def updateBookView(session):
     updateWindow = Tk()
@@ -86,6 +96,9 @@ def updateBookView(session):
     id_authorEntry.pack()
 
     def updateBookCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             returnCode = updateBook(session, int(id_bookEntry.get()), nameEntry.get(), int(id_authorEntry.get()))
             
@@ -104,6 +117,8 @@ def updateBookView(session):
 
     updateButton.pack()
 
+# Window for deleting
+
 def deleteBookView(session):
     deleteWindow = Tk()
 
@@ -118,6 +133,9 @@ def deleteBookView(session):
     id_bookEntry.pack()
 
     def deleteBookCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             deleteBook(session, int(id_bookEntry.get()))
             deleteWindow.destroy()

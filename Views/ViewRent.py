@@ -7,9 +7,14 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from sqlalchemy.exc import IntegrityError
 from ErrorMsgs import *
 
+# Function used to remove labels
 
 def removeLabel(label):
     label.destroy()
+
+# Additional windows popping up when doing operations on Rent
+
+# Window for creating
 
 def createRentView(session):
     createWindow = Tk()
@@ -44,6 +49,8 @@ def createRentView(session):
 
     labelsContainer.pack()
 
+    # Generating calendars for input
+
     datesContainer = Frame(createWindow)
 
     rent_dateCal = Calendar(createWindow, selectmode = 'day',
@@ -63,6 +70,8 @@ def createRentView(session):
     given_backLabel = Label(createWindow, text="given_back")
 
     given_backLabel.pack()
+
+    # Generating true or false fields for input
 
     trueFalseContainer = Frame(createWindow)
 
@@ -105,6 +114,9 @@ def createRentView(session):
     id_copyEntry.pack()
 
     def createRentCommand():
+
+        # Checking if rent date after due date and displaying error when true
+
         rent_date = datetime.strptime(rent_dateCal.get_date(), '%m/%d/%y').date()
         due_date = datetime.strptime(due_dateCal.get_date(), '%m/%d/%y').date()
         if rent_date > due_date:
@@ -112,6 +124,9 @@ def createRentView(session):
             wrongInputLabel.pack(side="bottom")
             createWindow.after(4000, removeLabel, wrongInputLabel)
         else:
+
+            # Performing operations on DB and displaying potential errors on GUI
+        
             try:
                 createRent(session, int(id_rentEntry.get()), 
                         int(id_clientEntry.get()), 
@@ -130,12 +145,16 @@ def createRentView(session):
 
     createButton.pack()
 
+# Window for reading
+
 def getRentView(session):
     readWindow = Tk()
 
     rents = getRents(session)
 
     TableRent(readWindow, rents)
+
+# Window for updating
 
 def updateRentView(session):
     updateWindow = Tk()
@@ -170,6 +189,8 @@ def updateRentView(session):
 
     labelsContainer.pack()
 
+    # Generating calendars for input
+
     datesContainer = Frame(updateWindow)
 
     rent_dateCal = Calendar(updateWindow, selectmode = 'day',
@@ -190,9 +211,11 @@ def updateRentView(session):
 
     given_backLabel.pack()
 
+    # Generating true or false fields for input
+
     trueFalseContainer = Frame(updateWindow)
 
-    given_back = bool()
+    given_back = bool(None)
 
     def trueCommand():
         trueButton.config(bg="green")
@@ -231,6 +254,9 @@ def updateRentView(session):
     id_copyEntry.pack()
 
     def updateRentCommand():
+
+        # Checking if rent date after due date and displaying error when true
+
         rent_date = datetime.strptime(rent_dateCal.get_date(), '%m/%d/%y').date()
         due_date = datetime.strptime(due_dateCal.get_date(), '%m/%d/%y').date()
         if rent_date > due_date:
@@ -238,11 +264,14 @@ def updateRentView(session):
             wrongInputLabel.pack(side="bottom")
             updateWindow.after(4000, removeLabel, wrongInputLabel)
         else:
+
+            # Performing operations on DB and displaying potential errors on GUI
+        
             try:
                 returnCode = updateRent(session, int(id_rentEntry.get()), 
                         int(id_clientEntry.get()), 
                         rent_date, due_date, 
-                        given_back.get(), 
+                        given_back, 
                         int(id_employeeEntry.get()), 
                         int(id_copyEntry.get()))
                 
@@ -260,6 +289,8 @@ def updateRentView(session):
 
     updateButton.pack()
 
+# Window for deleting
+
 def deleteRentView(session):
     deleteWindow = Tk()
 
@@ -274,6 +305,9 @@ def deleteRentView(session):
     id_rentEntry.pack()
 
     def deleteRentCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             deleteRent(session, int(id_rentEntry.get()))
             deleteWindow.destroy()

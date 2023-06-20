@@ -5,8 +5,9 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from sqlalchemy.exc import IntegrityError
 from ErrorMsgs import *
 
-def removeLabel(label):
-    label.destroy()
+# Additional windows popping up when doing operations on Clients
+
+# Window for creating
 
 def createClientView(session):
     createWindow = Tk()
@@ -46,6 +47,9 @@ def createClientView(session):
     phone_numberEntry.pack()
 
     def createClientCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             createClient(session, int(id_clientEntry.get()), first_nameEntry.get(), last_nameEntry.get(), phone_numberEntry.get())
             createWindow.destroy()
@@ -59,12 +63,16 @@ def createClientView(session):
 
     createButton.pack()
 
+# Window for reading
+
 def getClientView(session):
     readWindow = Tk()
 
     clients = getClients(session)
 
     TableClient(readWindow, clients)
+
+# Window for updating
 
 def updateClientView(session):
     updateWindow = Tk()
@@ -104,6 +112,9 @@ def updateClientView(session):
     phone_numberEntry.pack()
 
     def updateClientCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             returnCode = updateClient(session, int(id_clientEntry.get()), first_nameEntry.get(), last_nameEntry.get(), phone_numberEntry.get())
             
@@ -121,6 +132,8 @@ def updateClientView(session):
 
     updateButton.pack()
 
+# Window for deleting
+
 def deleteClientView(session):
     deleteWindow = Tk()
 
@@ -135,6 +148,9 @@ def deleteClientView(session):
     id_clientEntry.pack()
 
     def deleteClientCommand():
+
+        # Performing operations on DB and displaying potential errors on GUI
+        
         try:
             deleteClient(session, int(id_clientEntry.get()))
             deleteWindow.destroy()

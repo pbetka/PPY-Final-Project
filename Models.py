@@ -2,8 +2,12 @@ from sqlalchemy import MetaData, ForeignKey
 from sqlalchemy.orm import registry, Mapped, mapped_column, relationship
 from datetime import date
 
+# Models for all table
+
 metadata = MetaData()
 mapper_registry = registry(metadata=metadata)
+
+# Author
 
 @mapper_registry.mapped_as_dataclass
 class Author:
@@ -15,6 +19,8 @@ class Author:
     books: Mapped[list["Book"]] = relationship(
         back_populates="author", default_factory=lambda: []
     )
+
+# Book
 
 @mapper_registry.mapped_as_dataclass
 class Book:
@@ -28,6 +34,8 @@ class Book:
         back_populates="book", default_factory=lambda: []
     )
 
+# Copy
+
 @mapper_registry.mapped_as_dataclass
 class Copy:
     __tablename__ = "copy"
@@ -38,6 +46,8 @@ class Copy:
     rents: Mapped[list["Rent"]] = relationship(
         back_populates="copy", default_factory=lambda: []
     )
+
+# Employee
 
 @mapper_registry.mapped_as_dataclass
 class Employee:
@@ -51,6 +61,8 @@ class Employee:
         back_populates="employee", default_factory=lambda: []
     )
 
+# Client
+
 @mapper_registry.mapped_as_dataclass
 class Client:
     __tablename__ = "client"
@@ -62,6 +74,8 @@ class Client:
     rents: Mapped[list["Rent"]] = relationship(
         back_populates="client", default_factory=lambda: []
     )
+
+# Rent
 
 @mapper_registry.mapped_as_dataclass
 class Rent:

@@ -1,7 +1,12 @@
 import tkinter as tk
 
+# Table displaying Copies
+
 class TableCopy:
     def __init__(self, root, copies):
+
+        # Add headers to table
+
         headers = ["id_copy", "id_book"]
 
         numRows = len(copies)
@@ -10,6 +15,8 @@ class TableCopy:
         for j in range(numColumns):
             headerLabel = tk.Label(root, text=headers[j], font=("bold", 10))
             headerLabel.grid(row=0, column=j, padx=25, pady=5)
+
+        # Populate table with given data
         
         for i in range(numRows):
             for j in range(numColumns):
